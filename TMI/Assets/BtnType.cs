@@ -8,31 +8,56 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     public BTNType currentType;
     public Transform buttonScale;
     Vector3 defaultScale;
+    public CanvasGroup mainGroup;
+    public CanvasGroup optionGroup;
 
     private void Start()
     {
         defaultScale = buttonScale.localScale;
     }
+    bool isSound;
     public void OnBtnClick()
     {
         switch(currentType)
         {
             case BTNType.New:
-                Debug.Log("새게임");
+                SceneLoader.LoadSceneHandle("Play", 0);
                 break;
             case BTNType.Continue:
-                Debug.Log("이어하기");
+                SceneLoader.LoadSceneHandle("Play", 1);
                 break;
             case BTNType.Option:
-                Debug.Log("새게임");
+                CanvasGroupOn(optionGroup);
+                CanvasGroupOff(mainGroup);
                 break;
             case BTNType.Sound:
-                Debug.Log("새게임");
+                if(isSound)
+                {
+                    Debug.Log("사운드 OFF");
+                }
+                else
+                {
+                    Debug.Log("사운드 ON");
+                }
+                isSound = !isSound;
                 break;
             case BTNType.Back:
-                Debug.Log("새게임");
+                CanvasGroupOn(mainGroup);
+                CanvasGroupOff(optionGroup);
                 break;
         }
+    }
+    public void CanvasGroupOn(CanvasGroup cg)
+    {
+        cg.alpha = 1;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
+    }
+    public void CanvasGroupOff(CanvasGroup cg)
+    {
+        cg.alpha = 0;
+        cg.interactable = false;
+        cg.blocksRaycasts = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
