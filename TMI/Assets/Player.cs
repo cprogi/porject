@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     Vector3 touchPos;
     Vector2 dir;
     SpriteRenderer sprite;
-    
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         playerHp -= Time.deltaTime;
     }
 
-    
+
     void Update()
     {
         HealthDown();
@@ -39,11 +39,26 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "enemy")
+        {
             playerHp -= 10;
+            OnDamaged();
+            Invoke("OffDamaged", 2);
+        }
     }
 
     void SpeedUp()
     {
         moveSpeed *= 2;
+    }
+
+    void OnDamaged()
+    {
+        sprite.color = new Color(1, 1, 1, 0.4f);
+        gameObject.layer = 6;
+    }
+    void OffDamaged()
+    {
+        sprite.color = new Color(1, 1, 1, 1);
+        gameObject.layer = 3;
     }
 }
