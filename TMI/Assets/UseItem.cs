@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class UseItem : MonoBehaviour
 {
-    Player player;
-
+    public CheckUseItem check;
     public void UseHealthItem()
     {
-        player.playerHp += 5;
+        check.isUseHp = true;
         Destroy(gameObject);
+        
     }
 
     public void UseSpeedUpItem()
     {
-        player.moveSpeed *= 2;
+        check.isUseSpeed = true;
         Destroy(gameObject);
     }
 }

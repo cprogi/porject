@@ -22,4 +22,6 @@ public class GameManager : MonoBehaviour
         curHp = player.playerHp;
         hpBar.value = curHp / maxHp;
     }
+
+  
 }

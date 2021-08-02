@@ -15,4 +15,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        for(int i =0; i<slots.Length; i++)
+        {
+            if (slots[i].transform.childCount <= 0)
+                isEmpty[i] = true;
+        }
+    }
+
 }

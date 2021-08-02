@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     public float moveSpeed;
     public float playerHp;
+    public CheckUseItem check;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -17,13 +19,8 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    void HealthDown()
-    {
-        playerHp -= Time.deltaTime;
-    }
 
-
-    void Update()
+    private void Update()
     {
         HealthDown();
         if (Input.GetMouseButton(0))
@@ -34,6 +31,7 @@ public class Player : MonoBehaviour
 
         sprite.flipX = dir.x > 0;
 
+        CheckUseItem();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,10 +44,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SpeedUp()
-    {
-        moveSpeed *= 2;
-    }
 
     void OnDamaged()
     {
@@ -60,5 +54,23 @@ public class Player : MonoBehaviour
     {
         sprite.color = new Color(1, 1, 1, 1);
         gameObject.layer = 3;
+    }
+    void HealthDown()
+    {
+        playerHp -= Time.deltaTime;
+    }
+
+    void CheckUseItem()
+    {
+        if (check.isUseHp == true)
+        {
+            playerHp += 10;
+            check.isUseHp = false;
+        }
+        if (check.isUseSpeed == true)
+        {
+            moveSpeed *= 2;
+            check.isUseSpeed = false;
+        }
     }
 }
