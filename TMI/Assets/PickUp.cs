@@ -15,6 +15,7 @@ public class PickUp : MonoBehaviour
             {
                 if (inven.isEmpty[i])
                 {
+                    slotItem.SetActive(true);
                     Instantiate(slotItem, inven.slots[i].transform, false);
                     inven.isEmpty[i] = false;
                     Destroy(gameObject);

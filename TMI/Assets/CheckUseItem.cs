@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class CheckUseItem : MonoBehaviour
 {
-    public bool isUseHp;
-    public bool isUseSpeed;
+    public Player player;
+
+    public void UseHP()
+    {
+        player.playerHp += 5;
+        Destroy(gameObject);
+    }
+
+    public void UseSpeed()
+    {
+        player.moveSpeed *= 2;
+        Destroy(gameObject);
+    }
+
+
 }

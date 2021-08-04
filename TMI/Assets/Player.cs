@@ -31,7 +31,6 @@ public class Player : MonoBehaviour
 
         sprite.flipX = dir.x > 0;
 
-        CheckUseItem();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -59,18 +58,5 @@ public class Player : MonoBehaviour
     {
         playerHp -= Time.deltaTime;
     }
-
-    void CheckUseItem()
-    {
-        if (check.isUseHp == true)
-        {
-            playerHp += 10;
-            check.isUseHp = false;
-        }
-        if (check.isUseSpeed == true)
-        {
-            moveSpeed *= 2;
-            check.isUseSpeed = false;
-        }
-    }
+    
 }
