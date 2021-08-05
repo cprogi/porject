@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
     public Slider hpBar;
     public Player player;
+    public GameObject SetMenu;
     public float maxHp = 100;
     public float curHp;
     
@@ -21,6 +24,23 @@ public class GameManager : MonoBehaviour
     {
         curHp = player.playerHp;
         hpBar.value = curHp / maxHp;
+    }
+
+    public void OpenSetMenu()
+    {
+        SetMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void ReturnGame()
+    {
+        SetMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void ReturnMain()
+    {
+        SceneManager.LoadScene(0);
     }
 
   

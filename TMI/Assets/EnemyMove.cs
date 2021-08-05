@@ -6,28 +6,26 @@ public class EnemyMove : MonoBehaviour
 {
     Rigidbody2D rigid;
     SpriteRenderer sprite;
+    int xpos;
+    int ypos;
     
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        Invoke("Move", 3);
+        Invoke("Think", 7);
     }
 
-
-    void Update()
+    private void FixedUpdate()
     {
-        Invoke("Move", 3);
+        rigid.velocity = new Vector2(xpos, ypos);
+
     }
-    void Move()
+
+    void Think()
     {
-        float xpos = Random.Range(-2, 3);
-        float ypos = Random.Range(-2, 3);
-
-        Vector2 dirVec = new Vector2(transform.position.x + xpos,transform.position.y+ypos);
-
-        transform.position = Vector2.MoveTowards(transform.position, dirVec, Time.deltaTime);
-
-        Invoke("Move", 3);
+        xpos = Random.Range(-1, 2);
+        ypos = Random.Range(-1, 2);
+        Invoke("Think", 7);
     }
 }

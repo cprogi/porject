@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed;
     public float playerHp;
-    public CheckUseItem check;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -26,7 +25,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0))
             touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.position = Vector2.MoveTowards(transform.position, touchPos, Time.deltaTime * moveSpeed);
+        transform.position = Vector2.MoveTowards(transform.position, touchPos,Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
 
         sprite.flipX = dir.x > 0;
