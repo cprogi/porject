@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool isDead;
     public float moveSpeed;
     public float playerHp;
     Rigidbody2D rigid;
@@ -16,11 +17,14 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        isDead = false;
     }
 
 
     private void Update()
     {
+        if (playerHp <= 0)
+            isDead = true;
         HealthDown();
         if (Input.GetMouseButton(0))
             touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
