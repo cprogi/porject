@@ -12,11 +12,13 @@ public class Player : MonoBehaviour
     Vector3 touchPos;
     Vector2 dir;
     SpriteRenderer sprite;
+    Animator anim;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         isDead = false;
     }
 
@@ -33,7 +35,6 @@ public class Player : MonoBehaviour
         dir = touchPos - transform.position;
 
         sprite.flipX = dir.x > 0;
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
