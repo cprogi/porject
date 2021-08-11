@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public Slider hpBar;
     public Player player;
     public GameObject SetMenu;
+    public AboutItem aboutItem;
+    public PickUp itemScan;
+    public Text itemText;
     public float maxHp = 100;
     public float curHp;
     
@@ -64,5 +67,15 @@ public class GameManager : MonoBehaviour
         inventory.SetActive(false);
         Time.timeScale = 1;
     }
-  
+
+    public void ItemAction()
+    {
+        Item(itemScan.slotItem.GetComponent<ItemId>().itemId);
+    }
+
+    void Item(int id)
+    {
+        string itemData = aboutItem.ShowItemData(id);
+        itemText.text = itemData;
+    }
 }
