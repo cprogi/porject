@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
     public Player player;
     public GameObject SetMenu;
     public AboutItem aboutItem;
-    public PickUp itemScan;
     public Text itemText;
     public float maxHp = 100;
     public float curHp;
+    public int UseItemId;
     
     void Start()
     {
@@ -68,14 +68,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void ItemAction()
+    public void Show()
     {
-        Item(itemScan.slotItem.GetComponent<ItemId>().itemId);
+        itemText.text = aboutItem.ShowItemData(gameObject.GetComponent<ItemId>().itemId);
     }
 
-    void Item(int id)
-    {
-        string itemData = aboutItem.ShowItemData(id);
-        itemText.text = itemData;
-    }
 }
