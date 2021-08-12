@@ -68,9 +68,4 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void Show()
-    {
-        itemText.text = aboutItem.ShowItemData(gameObject.GetComponent<ItemId>().itemId);
-    }
-
 }

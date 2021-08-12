@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public bool isDead;
     public float moveSpeed;
     public float playerHp;
+    public bool isEquipped;
+    public GameObject sickle;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         isDead = false;
+        isEquipped = false;
     }
 
 
@@ -35,7 +38,12 @@ public class Player : MonoBehaviour
         dir = touchPos - transform.position;
 
         sprite.flipX = dir.x > 0;
+
+        if (sickle.activeSelf == true)
+            isEquipped = true;
+
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,6 +52,30 @@ public class Player : MonoBehaviour
             playerHp -= 10;
             OnDamaged();
             Invoke("OffDamaged", 2);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Seaweed" && isEquipped == true) 
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Inventory inven = GetComponent<Inventory>();
+                PickUp pickUp = collision.GetComponent<PickUp>();
+                GameObject slotItem = pickUp.slotItem;
+                
+                for (int i = 0; i < inven.slots.Length; i++)
+                {
+                    if (inven.isEmpty[i])
+                    {
+                        Instantiate(slotItem, inven.slots[i].transform, false);
+                        inven.isEmpty[i] = false;
+                        Destroy(collision.gameObject);
+                        break;
+                    }
+                }
+            }
         }
     }
 
