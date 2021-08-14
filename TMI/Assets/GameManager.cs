@@ -7,11 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject inventory;
     public Slider hpBar;
     public Player player;
     public GameObject SetMenu;
+    public AboutItem aboutItem;
+    public Text itemText;
     public float maxHp = 100;
     public float curHp;
+    public int UseItemId;
     
     void Start()
     {
@@ -43,5 +47,25 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-  
+    void CheckPlayerDie()
+    {
+        if(player.isDead == true)
+        {
+            SceneManager.LoadScene(0);
+            player.isDead = false;
+        }
+    }
+
+    public void ShowInventory()
+    {
+        inventory.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void CloseInventory()
+    {
+        inventory.SetActive(false);
+        Time.timeScale = 1;
+    }
+
 }
