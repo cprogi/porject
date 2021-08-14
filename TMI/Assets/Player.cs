@@ -8,12 +8,15 @@ public class Player : MonoBehaviour
     public bool isDead;
     public float moveSpeed;
     public float playerHp;
+    public DialogueManager dialogue;
     public bool isEquipped;
     public GameObject sickle;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
+    Vector2 dirVec;
     SpriteRenderer sprite;
+    GameObject scanObject;
     Animator anim;
 
     void Start()
@@ -31,13 +34,20 @@ public class Player : MonoBehaviour
         if (playerHp <= 0)
             isDead = true;
         HealthDown();
+     
         if (Input.GetMouseButton(0))
-            touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.position = Vector2.MoveTowards(transform.position, touchPos,Time.deltaTime* moveSpeed);
+        transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
-
         sprite.flipX = dir.x > 0;
+        dirVec = dir.normalized;
+
+        //Scan Object
+        if(Input.GetMouseButton(0)&&scanObject != null)
+        {
+            dialogue.Action(scanObject);
+        }
 
         if (sickle.activeSelf == true)
             isEquipped = true;
@@ -95,4 +105,15 @@ public class Player : MonoBehaviour
         playerHp -= Time.deltaTime;
     }
     
+    void FixedUpdate()
+    {
+        Debug.DrawRay(rigid.position, dirVec*3f, new Color(0,1,0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 3f, LayerMask.GetMask("Object"));
+        if (rayHit.collider != null)
+        {
+            scanObject = rayHit.collider.gameObject;
+        }
+        else
+            scanObject = null;
+    }
 }
