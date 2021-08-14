@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         dirVec = dir.normalized;
 
         //Scan Object
-        if(Input.GetMouseButton(0) && scanObject != null)
+        if(Input.GetMouseButton(0)&&scanObject != null)
         {
             dialogue.Action(scanObject);
         }
@@ -107,8 +107,8 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
-        Debug.DrawRay(rigid.position, dirVec*4f, new Color(0,1,0));
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 4f, LayerMask.GetMask("Object"));
+        Debug.DrawRay(rigid.position, dirVec*3f, new Color(0,1,0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 3f, LayerMask.GetMask("Object"));
         if (rayHit.collider != null)
         {
             scanObject = rayHit.collider.gameObject;
