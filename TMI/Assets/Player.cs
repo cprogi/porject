@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (playerHp > 100)
+            playerHp = 100;
         if (playerHp <= 0)
             isDead = true;
         HealthDown();

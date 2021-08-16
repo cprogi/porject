@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     public Slider hpBar;
     public Player player;
     public GameObject SetMenu;
-    public AboutItem aboutItem;
-    public Text itemText;
     public float maxHp = 100;
     public float curHp;
     public int UseItemId;
