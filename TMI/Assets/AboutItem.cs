@@ -8,7 +8,10 @@ public class AboutItem : MonoBehaviour
     Dictionary<int, string> itemData;
     Dictionary<int, string> itemName;
     public Player player;
+    public GameObject seaweed;
+    public touchEvent touch;
     public int itemReady;
+    public string useItem;
 
     private void Awake()
     {

@@ -9,6 +9,7 @@ public class touchEvent : MonoBehaviour
     public Text itemDescription;
     public Text itemNameText;
     public AboutItem aboutItem;
+    public string slotName;
 
     public void TouchEvent()
     {
@@ -18,6 +19,7 @@ public class touchEvent : MonoBehaviour
             itemDescription.text = aboutItem.ShowItemData(item.GetComponent<ItemId>().itemId);
             itemNameText.text = aboutItem.ShowItemName(item.GetComponent<ItemId>().itemId);
             aboutItem.itemReady = item.GetComponent<ItemId>().itemId;
+            slot.gameObject.name = slotName;
         }
         else
             return;
