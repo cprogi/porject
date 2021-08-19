@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Slider hpBar;
     public Player player;
     public GameObject SetMenu;
+    public GameObject questSet;
     public float maxHp = 100;
     public float curHp;
     public int UseItemId;
@@ -71,5 +72,15 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
     
+    public void OpenQuest()
+    {
+        questSet.SetActive(true);
+        Time.timeScale = 0;
+    }
 
+    public void CloseQuest()
+    {
+        questSet.SetActive(false);
+        Time.timeScale = 1;
+    }
 }
