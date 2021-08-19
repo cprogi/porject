@@ -43,6 +43,7 @@ public class AboutItem : MonoBehaviour
             {
                 Transform DI = inven.slots[i].transform.GetChild(0);
                 Destroy(DI.gameObject);
+                break;
             }
         }
     }

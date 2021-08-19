@@ -39,8 +39,8 @@ public class Player : MonoBehaviour
      
         if (Input.GetMouseButton(0))
                 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
+        if(touchPos!=null)
+            transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
         sprite.flipX = dir.x > 0;
         dirVec = dir.normalized;
