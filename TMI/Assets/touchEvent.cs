@@ -19,7 +19,7 @@ public class touchEvent : MonoBehaviour
             itemDescription.text = aboutItem.ShowItemData(item.GetComponent<ItemId>().itemId);
             itemNameText.text = aboutItem.ShowItemName(item.GetComponent<ItemId>().itemId);
             aboutItem.itemReady = item.GetComponent<ItemId>().itemId;
-            aboutItem.slotName = slot.name;
+            slot.gameObject.name = slotName;
         }
         else
             return;
