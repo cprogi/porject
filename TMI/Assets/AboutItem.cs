@@ -8,11 +8,10 @@ public class AboutItem : MonoBehaviour
     Dictionary<int, string> itemData;
     Dictionary<int, string> itemName;
     public Player player;
-    public GameObject seaweed;
-    public touchEvent touch;
+    public Inventory inven;
     public int itemReady;
     public string useItem;
-
+    public string slotName;
     private void Awake()
     {
         itemData = new Dictionary<int, string>();
@@ -36,12 +35,25 @@ public class AboutItem : MonoBehaviour
         return itemName[id];
     }
 
+    public void check()
+    {
+        for(int i = 1; i<inven.slots.Length; i++)
+        {
+            if(slotName == inven.slots[i].name)
+            {
+                Transform DI = inven.slots[i].transform.GetChild(0);
+                Destroy(DI.gameObject);
+            }
+        }
+    }
+
     public void UseItem()
     {
         switch (itemReady)
         {
             case 10:
-                player.playerHp += 20;
+                player.playerHp += 10;
+                check();
                 break;
             default:
                 return;
