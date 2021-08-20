@@ -22,8 +22,11 @@ public class AboutItem : MonoBehaviour
     void GenerateData()
     {
         itemName.Add(10,"해초");
+        itemName.Add(20, "열쇠");
+        itemName.Add(100, "보석");
         itemData.Add(10,"HP를 5 회복 시켜주는 아이템이다.");
-        itemData.Add(100, "해초를 캐는데 사용된다.");
+        itemData.Add(20, "보물상자를 여는데 사용된다.");
+        itemData.Add(100, "사용처 모름");
     }
 
     public string ShowItemData(int id)
@@ -37,7 +40,7 @@ public class AboutItem : MonoBehaviour
 
     public void check()
     {
-        for(int i = 1; i<inven.slots.Length; i++)
+        for(int i = 0; i<inven.slots.Length; i++)
         {
             if(slotName == inven.slots[i].name)
             {
@@ -55,6 +58,9 @@ public class AboutItem : MonoBehaviour
             case 10:
                 player.playerHp += 10;
                 check();
+                break;
+            case 20:
+                player.isUsedKey = true;
                 break;
             default:
                 return;

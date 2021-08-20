@@ -23,6 +23,8 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].transform.childCount <= 0)
                 isEmpty[i] = true;
+            else
+                isEmpty[i] = false;
         }
     }
 }

@@ -9,8 +9,10 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public float playerHp;
     public DialogueManager dialogue;
+    public TreasBox treas;
     public bool isEquipped;
     public GameObject sickle;
+    public bool isUsedKey;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         isDead = false;
         isEquipped = false;
+        isUsedKey = false;
     }
 
 
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
         sprite.flipX = dir.x > 0;
+        sickle.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
         dirVec = dir.normalized;
 
         //Scan Object
@@ -88,6 +92,11 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+        }
+        else if(collision.gameObject.tag=="treasure" && isUsedKey == true)
+        {
+            treas.GetItem();
+            isUsedKey = false;
         }
     }
 

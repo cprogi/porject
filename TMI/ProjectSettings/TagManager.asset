@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Seaweed
   - Boundary
+  - treasure
   layers:
   - Default
   - TransparentFX
