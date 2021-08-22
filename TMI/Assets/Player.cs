@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
     public float playerHp;
     public DialogueManager dialogue;
     public TreasBox treas;
+    public AboutItem aboutItem;
     public bool isEquipped;
     public GameObject sickle;
     public bool isUsedKey;
+    public bool itemGet;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
         isDead = false;
         isEquipped = false;
         isUsedKey = false;
+        itemGet = false;
     }
 
 
@@ -73,14 +76,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Seaweed" && isEquipped == true) 
+        if (collision.gameObject.tag == "Seaweed" && isEquipped == true)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Inventory inven = GetComponent<Inventory>();
                 PickUp pickUp = collision.GetComponent<PickUp>();
                 GameObject slotItem = pickUp.slotItem;
-                
+
                 for (int i = 0; i < inven.slots.Length; i++)
                 {
                     if (inven.isEmpty[i])
@@ -93,10 +96,33 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        else if(collision.gameObject.tag=="treasure" && isUsedKey == true)
+        else if (collision.gameObject.tag == "treasure" && isUsedKey == true)
         {
+            aboutItem.check();
             treas.GetItem();
+            itemGet = true;
             isUsedKey = false;
+        }
+
+        else if (collision.gameObject.tag == "Item")
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Inventory inven = GetComponent<Inventory>();
+                PickUp pickUp = collision.GetComponent<PickUp>();
+                GameObject slotItem = pickUp.slotItem;
+
+                for (int i = 0; i < inven.slots.Length; i++)
+                {
+                    if (inven.isEmpty[i])
+                    {
+                        Instantiate(slotItem, inven.slots[i].transform, false);
+                        inven.isEmpty[i] = false;
+                        Destroy(collision.gameObject);
+                        break;
+                    }
+                }
+            }
         }
     }
 
