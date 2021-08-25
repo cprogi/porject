@@ -23,10 +23,12 @@ public class AboutItem : MonoBehaviour
     {
         itemName.Add(10,"해초");
         itemName.Add(20, "열쇠");
-        itemName.Add(100, "보석");
+        itemName.Add(100, "붉은 보석");
+        itemName.Add(200, "노란 보석");
         itemData.Add(10,"HP를 5 회복 시켜주는 아이템이다.");
         itemData.Add(20, "보물상자를 여는데 사용된다.");
         itemData.Add(100, "사용처 모름");
+        itemData.Add(200, "역시 사용처 모름");
     }
 
     public string ShowItemData(int id)
