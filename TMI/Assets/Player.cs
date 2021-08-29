@@ -83,25 +83,42 @@ public class Player : MonoBehaviour
                 Inventory inven = GetComponent<Inventory>();
                 PickUp pickUp = collision.GetComponent<PickUp>();
                 GameObject slotItem = pickUp.slotItem;
+                bool checkOverlap = false;
+                int overlapIdx = 0;
 
-                for (int i = 0; i < inven.slots.Length; i++)
+                for (int k = 0; k < inven.slots.Length; k++)
                 {
-                    if (inven.isEmpty[i])
+                    if (inven.slots[k].transform.childCount > 0)
                     {
-                        Instantiate(slotItem, inven.slots[i].transform, false);
-                        inven.isEmpty[i] = false;
-                        Destroy(collision.gameObject);
-                        break;
+                        if (inven.slots[k].transform.GetChild(0).gameObject.tag == slotItem.gameObject.tag)
+                        {
+                            checkOverlap = true;
+                            overlapIdx = k;
+                            Debug.Log("ม฿บน " + overlapIdx.ToString());
+                            break;
+                        }
                     }
                 }
+
+                if (checkOverlap == false)
+                {
+                    for (int i = 0; i < inven.slots.Length; i++)
+                    {
+                        if (inven.isEmpty[i] == true)
+                        {
+                            Instantiate(slotItem, inven.slots[i].transform, false);
+                            inven.isEmpty[i] = false;
+                            Destroy(collision.gameObject);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Instantiate(slotItem, inven.slots[overlapIdx].transform, false);
+                    Destroy(collision.gameObject);
+                }
             }
-        }
-        else if (collision.gameObject.tag == "treasure" && isUsedKey == true)
-        {
-            aboutItem.check();
-            treas.GetItem();
-            itemGet = true;
-            isUsedKey = false;
         }
 
         else if (collision.gameObject.tag == "Item")
@@ -111,17 +128,41 @@ public class Player : MonoBehaviour
                 Inventory inven = GetComponent<Inventory>();
                 PickUp pickUp = collision.GetComponent<PickUp>();
                 GameObject slotItem = pickUp.slotItem;
+                bool checkOverlap = false;
+                int overlapIdx = 0;
 
-                for (int i = 0; i < inven.slots.Length; i++)
+                for (int k = 0; k < inven.slots.Length; k++)
                 {
-                    if (inven.isEmpty[i])
+                    if (inven.slots[k].transform.childCount > 0)
                     {
-                        Instantiate(slotItem, inven.slots[i].transform, false);
-                        inven.isEmpty[i] = false;
-                        Destroy(collision.gameObject);
-                        break;
+                        if (inven.slots[k].transform.GetChild(0).name == slotItem.name)
+                        {
+                            checkOverlap = true;
+                            overlapIdx = k;
+                            break;
+                        }
                     }
                 }
+
+                if (checkOverlap == false)
+                {
+                    for (int i = 0; i < inven.slots.Length; i++)
+                    {
+                        if (inven.isEmpty[i] == true)
+                        {
+                            Instantiate(slotItem, inven.slots[i].transform, false);
+                            inven.isEmpty[i] = false;
+                            Destroy(collision.gameObject);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Instantiate(slotItem, inven.slots[overlapIdx].transform, false);
+                    Destroy(collision.gameObject);
+                }
+
             }
         }
     }

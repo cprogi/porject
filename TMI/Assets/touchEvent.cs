@@ -22,6 +22,6 @@ public class touchEvent : MonoBehaviour
             aboutItem.slotName = slot.name;
         }
         else
-            return;
+            aboutItem.itemReady = 0;
     }
 }

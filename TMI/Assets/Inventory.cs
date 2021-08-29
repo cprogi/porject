@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
     public bool[] isEmpty;
     public GameObject[] slots;
+    public Text[] itemCount;
     public AboutItem aboutItem;
 
     private void Start()
@@ -25,6 +26,11 @@ public class Inventory : MonoBehaviour
                 isEmpty[i] = true;
             else
                 isEmpty[i] = false;
+        }
+
+        for(int j = 0; j < slots.Length; j++)
+        {
+            itemCount[j].text = slots[j].transform.childCount.ToString();
         }
     }
 }

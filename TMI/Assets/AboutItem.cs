@@ -21,14 +21,21 @@ public class AboutItem : MonoBehaviour
 
     void GenerateData()
     {
-        itemName.Add(10,"해초");
+        itemName.Add(10,"푸른 해초");
         itemName.Add(20, "열쇠");
+        itemName.Add(30, "치유 해초");
+        itemName.Add(50, "기름 흡입부 머리");
         itemName.Add(100, "붉은 보석");
         itemName.Add(200, "노란 보석");
-        itemData.Add(10,"HP를 5 회복 시켜주는 아이템이다.");
-        itemData.Add(20, "보물상자를 여는데 사용된다.");
-        itemData.Add(100, "사용처 모름");
+        itemName.Add(1000, "베터리");
+
+        itemData.Add(10,"체력을 회복하는 해초");
+        itemData.Add(20, "오래된 열쇠.무엇을 열기 위한 것인지 모른다.");
+        itemData.Add(30, "처를 치유하는 희귀한 해초. 푸른 해초를 5개 먹는 것과 효능이 같다고 알려져 있다.");
+        itemData.Add(50, "몸체와 만나야 한다.");
+        itemData.Add(100, "붉은 빛의 아름다운 보석.");
         itemData.Add(200, "역시 사용처 모름");
+        itemData.Add(1000, "역시나 마찬가지");
     }
 
     public string ShowItemData(int id)
@@ -63,6 +70,10 @@ public class AboutItem : MonoBehaviour
                 break;
             case 20:
                 player.isUsedKey = true;
+                break;
+            case 30:
+                player.playerHp += 50;
+                check();
                 break;
             default:
                 return;

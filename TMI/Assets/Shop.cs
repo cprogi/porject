@@ -48,44 +48,79 @@ public class Shop : MonoBehaviour
             int cnt = 0;
             for(int i =0; i < inven.slots.Length; i++)
             {
+                if (cnt >= requireNum[index])
+                    break;
                 if (inven.slots[i].transform.childCount > 0)
                 {
                     Transform k = inven.slots[i].transform.GetChild(0);
-                    if (cnt == requireNum[index])
-                        break;
-                    if (require[index].gameObject.name == k.gameObject.name)
+                    if(k.gameObject.name == require[index].name)
                     {
-                        Destroy(k.gameObject);
-                        inven.isEmpty[i] = true;
-                        cnt++;
+                        for(int j = 0; j < requireNum[index]; j++)
+                        {
+                            Destroy(k.gameObject);
+                            cnt++;
+                        }
                     }
                 }
             }
 
             int ct = 0;
+            bool checkOverlap = false;
+            int overlapIdx = 0;
 
             for(int j = 0; j<inven.slots.Length; j++)
             {
                 if (ct == itemNum[index])
                     break;
-                
-                if(inven.isEmpty[j] == true)
+                if (inven.slots[j].transform.childCount > 0)
                 {
-                    Instantiate(itemObj[index], inven.slots[j].transform, false);
-                    inven.isEmpty[j] = false;
-                    ct++;
+                    Transform go = inven.slots[j].transform.GetChild(0);
+
+                    if(go.gameObject.name == itemObj[index].name)
+                    {
+                        checkOverlap = true;
+                        overlapIdx = j;
+                        Debug.Log("중복 " + j.ToString());
+                        break;
+                    }
+                }
+
+                if (checkOverlap == false)
+                {
+                    for (int k = 0; k < inven.slots.Length; k++)
+                    { 
+                        if (inven.isEmpty[k])
+                        {
+                            inven.isEmpty[k] = false;
+                            for (int l = 0; l < itemNum[index]; l++)
+                            {
+                                Instantiate(itemObj[index], inven.slots[k].transform, false);
+                                ct++;
+                            }
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int l = 0; l < itemNum[index]; l++)
+                    {
+                        Instantiate(itemObj[index], inven.slots[overlapIdx].transform, false);
+                        ct++;
+                        Debug.Log("ok");
+                    }
                 }
             }
 
             OpenText();
             talkText.text = "아이템을 구입하셨습니다.";
-            Invoke("CloseText", 3);
+            Invoke("CloseText", 1);
         }
         else
         {
             OpenText();
             talkText.text = "개수가 부족합니다.";
-            Invoke("CloseText", 3);
+            Invoke("CloseText", 1);
         }
     }
 
