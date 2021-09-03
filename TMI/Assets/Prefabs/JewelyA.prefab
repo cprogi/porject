@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2466034063620531190}
   - component: {fileID: 8761569226551451191}
   m_Layer: 5
-  m_Name: Jewely
-  m_TagString: Untagged
+  m_Name: JewelyA
+  m_TagString: JewelyA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

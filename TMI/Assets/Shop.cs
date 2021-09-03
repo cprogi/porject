@@ -33,12 +33,15 @@ public class Shop : MonoBehaviour
         int count = 0;
         for(int i = 0; i < inven.slots.Length; i++)
         {
-            if (inven.slots[i].transform.childCount > 0)
+            if (inven.slots[i].transform.childCount > 1)
             {
-                Transform c = inven.slots[i].transform.GetChild(0);
-                if (require[index].gameObject.name == c.gameObject.name)
+                Transform c = inven.slots[i].transform.GetChild(1);
+                for(int j = 0; j < requireNum[index]; j++)
                 {
-                    count++;
+                    if (require[index].gameObject.tag == c.gameObject.tag)
+                    {
+                        count++;
+                    }
                 }
             }
         }
@@ -50,10 +53,10 @@ public class Shop : MonoBehaviour
             {
                 if (cnt >= requireNum[index])
                     break;
-                if (inven.slots[i].transform.childCount > 0)
+                if (inven.slots[i].transform.childCount > 1)
                 {
-                    Transform k = inven.slots[i].transform.GetChild(0);
-                    if(k.gameObject.name == require[index].name)
+                    Transform k = inven.slots[i].transform.GetChild(1);
+                    if(k.gameObject.tag == require[index].tag)
                     {
                         for(int j = 0; j < requireNum[index]; j++)
                         {
@@ -70,13 +73,11 @@ public class Shop : MonoBehaviour
 
             for(int j = 0; j<inven.slots.Length; j++)
             {
-                if (ct == itemNum[index])
-                    break;
-                if (inven.slots[j].transform.childCount > 0)
+                if (inven.slots[j].transform.childCount > 1)
                 {
-                    Transform go = inven.slots[j].transform.GetChild(0);
+                    Transform go = inven.slots[j].transform.GetChild(1);
 
-                    if(go.gameObject.name == itemObj[index].name)
+                    if(go.gameObject.tag == itemObj[index].tag)
                     {
                         checkOverlap = true;
                         overlapIdx = j;
@@ -84,31 +85,35 @@ public class Shop : MonoBehaviour
                         break;
                     }
                 }
+            }
 
-                if (checkOverlap == false)
+            if (checkOverlap == false)
+            {
+                for (int k = 0; k < inven.slots.Length; k++)
                 {
-                    for (int k = 0; k < inven.slots.Length; k++)
-                    { 
-                        if (inven.isEmpty[k])
+                    if (inven.isEmpty[k])
+                    {
+                        inven.isEmpty[k] = false;
+                        for (int l = 0; l < itemNum[index]; l++)
                         {
-                            inven.isEmpty[k] = false;
-                            for (int l = 0; l < itemNum[index]; l++)
-                            {
-                                Instantiate(itemObj[index], inven.slots[k].transform, false);
-                                ct++;
-                            }
-                            break;
+                            if (ct == itemNum[index])
+                                break;
+                            Instantiate(itemObj[index], inven.slots[k].transform, false);
+                            ct++;
                         }
+                        break;
                     }
                 }
-                else
+            }
+            else
+            {
+                for (int l = 0; l < itemNum[index]; l++)
                 {
-                    for (int l = 0; l < itemNum[index]; l++)
-                    {
-                        Instantiate(itemObj[index], inven.slots[overlapIdx].transform, false);
-                        ct++;
-                        Debug.Log("ok");
-                    }
+                    if (ct == itemNum[index])
+                        break;
+                    Instantiate(itemObj[index], inven.slots[overlapIdx].transform, false);
+                    ct++;
+                    Debug.Log("ok");
                 }
             }
 

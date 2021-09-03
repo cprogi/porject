@@ -120,4 +120,9 @@ public class GameManager : MonoBehaviour
     {
         Notice.gameObject.SetActive(false);
     }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
 }

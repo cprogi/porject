@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1699412549195720867}
   - component: {fileID: 1699412549195720870}
   m_Layer: 5
-  m_Name: item_seaweed
-  m_TagString: Seaweed
+  m_Name: SeaweedA
+  m_TagString: SeaweedA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

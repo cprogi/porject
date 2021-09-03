@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].transform.childCount <= 0)
+            if (slots[i].transform.childCount <= 1)
                 isEmpty[i] = true;
             else
                 isEmpty[i] = false;
@@ -30,7 +30,8 @@ public class Inventory : MonoBehaviour
 
         for(int j = 0; j < slots.Length; j++)
         {
-            itemCount[j].text = slots[j].transform.childCount.ToString();
+            int c = slots[j].transform.childCount - 1;
+            itemCount[j].text = c.ToString();
         }
     }
 }
