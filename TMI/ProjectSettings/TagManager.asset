@@ -9,6 +9,20 @@ TagManager:
   - Item
   - Seaweed
   - Boundary
+  - treasure
+  - Asp
+  - Aspbody
+  - Asphead
+  - Battery
+  - Hammer
+  - JewelyA
+  - JewelyB
+  - JewelyC
+  - Key
+  - Map
+  - Pearl
+  - SeaweedA
+  - SeaweedB
   layers:
   - Default
   - TransparentFX

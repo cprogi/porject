@@ -9,8 +9,11 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public float playerHp;
     public DialogueManager dialogue;
+    public TreasBox treas;
+    public AboutItem aboutItem;
     public bool isEquipped;
-    public GameObject sickle;
+    public GameObject equip;
+    public bool itemGet;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -18,6 +21,7 @@ public class Player : MonoBehaviour
     SpriteRenderer sprite;
     GameObject scanObject;
     Animator anim;
+    public Sprite[] equipList;
 
     void Start()
     {
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         isDead = false;
         isEquipped = false;
+        itemGet = false;
     }
 
 
@@ -39,10 +44,11 @@ public class Player : MonoBehaviour
      
         if (Input.GetMouseButton(0))
                 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
+        if(touchPos!=null)
+            transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
         sprite.flipX = dir.x > 0;
+        equip.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
         dirVec = dir.normalized;
 
         //Scan Object
@@ -51,13 +57,13 @@ public class Player : MonoBehaviour
             dialogue.Action(scanObject);
         }
 
-        if (sickle.activeSelf == true)
+        if (equip.activeSelf == true)
             isEquipped = true;
 
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "enemy")
         {
@@ -69,24 +75,97 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Seaweed" && isEquipped == true) 
+        if (collision.gameObject.tag == "SeaweedA" && isEquipped == true && equip.GetComponent<SpriteRenderer>().sprite == equipList[0])
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Inventory inven = GetComponent<Inventory>();
                 PickUp pickUp = collision.GetComponent<PickUp>();
                 GameObject slotItem = pickUp.slotItem;
-                
-                for (int i = 0; i < inven.slots.Length; i++)
+                bool checkOverlap = false;
+                int overlapIdx = 0;
+
+                //아이템 중복 체크
+                for (int k = 0; k < inven.slots.Length; k++)
                 {
-                    if (inven.isEmpty[i])
+                    if (inven.slots[k].transform.childCount > 1)
                     {
-                        Instantiate(slotItem, inven.slots[i].transform, false);
-                        inven.isEmpty[i] = false;
-                        Destroy(collision.gameObject);
-                        break;
+                        if (inven.slots[k].transform.GetChild(1).gameObject.tag == slotItem.gameObject.tag)
+                        {
+                            checkOverlap = true;
+                            overlapIdx = k;
+                            Debug.Log("중복 " + overlapIdx.ToString());
+                            break;
+                        }
                     }
                 }
+
+                //아이템 중복x
+                if (checkOverlap == false)
+                {
+                    for (int i = 0; i < inven.slots.Length; i++)
+                    {
+                        if (inven.isEmpty[i] == true)
+                        {
+                            Instantiate(slotItem, inven.slots[i].transform, false);
+                            inven.isEmpty[i] = false;
+                            Destroy(collision.gameObject);
+                            break;
+                        }
+                    }
+                }
+
+                //중복o
+                else
+                {
+                    Instantiate(slotItem, inven.slots[overlapIdx].transform, false);
+                    Destroy(collision.gameObject);
+                }
+            }
+        }
+
+        else if (collision.gameObject.tag == "item")
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Inventory inven = GetComponent<Inventory>();
+                PickUp pickUp = collision.GetComponent<PickUp>();
+                GameObject slotItem = pickUp.slotItem;
+                bool checkOverlap = false;
+                int overlapIdx = 0;
+
+                for (int k = 0; k < inven.slots.Length; k++)
+                {
+                    if (inven.slots[k].transform.childCount > 1)
+                    {
+                        if (inven.slots[k].transform.GetChild(1).tag == slotItem.tag)
+                        {
+                            checkOverlap = true;
+                            overlapIdx = k;
+                            break;
+                        }
+                    }
+                }
+
+                if (checkOverlap == false)
+                {
+                    for (int i = 0; i < inven.slots.Length; i++)
+                    {
+                        if (inven.isEmpty[i] == true)
+                        {
+                            Instantiate(slotItem, inven.slots[i].transform, false);
+                            inven.isEmpty[i] = false;
+                            Destroy(collision.gameObject);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Instantiate(slotItem, inven.slots[overlapIdx].transform, false);
+                    Destroy(collision.gameObject);
+                }
+
             }
         }
     }

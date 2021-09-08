@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Player player;
     public GameObject SetMenu;
     public GameObject questSet;
+    public GameObject BookSet;
+    public Text Notice;
     public float maxHp = 100;
     public float curHp;
     public int UseItemId;
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckPlayerDie();
+        ItemNotice();
         curHp = player.playerHp;
         hpBar.value = curHp / maxHp;
     }
@@ -82,5 +86,43 @@ public class GameManager : MonoBehaviour
     {
         questSet.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void OpenBook()
+    {
+        BookSet.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void CloseBook()
+    {
+        BookSet.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    void ItemNotice()
+    {
+        if(player.itemGet == true)
+        {
+            Notice.text = "æ∆¿Ã≈€¿ª »πµÊ«ﬂΩ¿¥œ¥Ÿ.";
+            OpenNotice();
+            Invoke("CloseNotice", 3);
+            player.itemGet = false;
+        }
+    }
+
+    void OpenNotice()
+    {
+        Notice.gameObject.SetActive(true);
+    }
+
+    void CloseNotice()
+    {
+        Notice.gameObject.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
     }
 }
