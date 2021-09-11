@@ -14,14 +14,17 @@ public class Player : MonoBehaviour
     public bool isEquipped;
     public GameObject equip;
     public bool itemGet;
+    public bool curse;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
     Vector2 dirVec;
+    Vector2 reverseVec;
     SpriteRenderer sprite;
     GameObject scanObject;
     Animator anim;
     public Sprite[] equipList;
+    public Sprite Marine;
 
     void Start()
     {
@@ -31,6 +34,7 @@ public class Player : MonoBehaviour
         isDead = false;
         isEquipped = false;
         itemGet = false;
+        curse = false;
     }
 
 
@@ -44,11 +48,20 @@ public class Player : MonoBehaviour
      
         if (Input.GetMouseButton(0))
                 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(touchPos!=null)
-            transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
-        sprite.flipX = dir.x > 0;
-        equip.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
+        if (curse == false)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, touchPos, dialogue.isAction ? 0 : Time.deltaTime * moveSpeed);
+            sprite.flipX = dir.x > 0;
+            equip.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
+        }
+        else
+        {
+            reverseVec = new Vector2(touchPos.x - 2 * dir.x, touchPos.y - 2 * dir.y);
+            transform.position = Vector2.MoveTowards(transform.position, reverseVec, dialogue.isAction ? 0 : Time.deltaTime * moveSpeed);
+            sprite.flipX = dir.x < 0;
+            equip.GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+        }
         dirVec = dir.normalized;
 
         //Scan Object
@@ -168,6 +181,17 @@ public class Player : MonoBehaviour
 
             }
         }
+
+        else if (collision.gameObject.tag == "3rd stage")
+        {
+            curse = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "3rd stage")
+            curse = false;
     }
 
 
@@ -184,6 +208,11 @@ public class Player : MonoBehaviour
     void HealthDown()
     {
         playerHp -= Time.deltaTime;
+    }
+
+    public void ChangeToMarine()
+    {
+        sprite.sprite = Marine;
     }
     
     void FixedUpdate()

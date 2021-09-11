@@ -23,6 +23,8 @@ TagManager:
   - Pearl
   - SeaweedA
   - SeaweedB
+  - Handle
+  - 3rd stage
   layers:
   - Default
   - TransparentFX
