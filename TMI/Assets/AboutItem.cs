@@ -10,6 +10,7 @@ public class AboutItem : MonoBehaviour
     public Player player;
     public GameObject Asp;
     public GameObject Map;
+    public GameObject Necro;
     public Inventory inven;
     public int itemReady;
     public string useItem;
@@ -44,7 +45,10 @@ public class AboutItem : MonoBehaviour
         itemName.Add(600, "인어변신약");
         itemName.Add(700, "해초농축액");
         itemName.Add(800, "낡은 문고리");
+        itemName.Add(900, "금빛비늘");
         itemName.Add(1000, "건전지");
+        itemName.Add(1100, "네크로미콘");
+        itemName.Add(1200, "청록 노커");
 
         itemData.Add(1, "해초를 캐는 도구");
         itemData.Add(2, "딱딱한 것을 깨뜨리는 튼튼한 망치");
@@ -67,7 +71,10 @@ public class AboutItem : MonoBehaviour
         itemData.Add(600, "인어로 변신할 수 있는 약품. 일정 시간이 지나면 다시 사람의 모습으로 돌아온다");
         itemData.Add(700, "체력을 완전히 회복하는 약");
         itemData.Add(800, "어떤 문에서 떨어져 나온 듯한 문고리");
+        itemData.Add(900, "금빛의 비늘");
         itemData.Add(1000, "전자제품을 작동시킬 수 있는 건전지");
+        itemData.Add(1100, "금지된 전설의 마도서. 온갖 신비로운 주술들이 적혀 있지만 평범한 인간은 읽으면 미쳐버린다.");
+        itemData.Add(1200, "아름다운 모양의 도어 노커. 무엇을 두드리기 위한 것인지 모른다.");
     }
 
     public string ShowItemData(int id)
@@ -87,6 +94,7 @@ public class AboutItem : MonoBehaviour
             {
                 Transform DI = inven.slots[i].transform.GetChild(1);
                 Destroy(DI.gameObject);
+                itemReady = 0;
                 break;
             }
         }
@@ -146,7 +154,10 @@ public class AboutItem : MonoBehaviour
     {
         Map.SetActive(true);
     }
-
+    void ShowNecro()
+    {
+        Necro.SetActive(true);
+    }
     public void UseItem()
     {
         switch (itemReady)
@@ -156,6 +167,9 @@ public class AboutItem : MonoBehaviour
                 break;
             case 2:
                 player.equip.GetComponent<SpriteRenderer>().sprite = player.equipList[1];
+                break;
+            case 3:
+                player.equip.GetComponent<SpriteRenderer>().sprite = player.equipList[2];
                 break;
             case 10:
                 player.playerHp += 10;
@@ -184,6 +198,9 @@ public class AboutItem : MonoBehaviour
                 break;
             case 1000:
                 CountAspMaterial();
+                break;
+            case 1100:
+                ShowNecro();
                 break;
             default:
                 return;

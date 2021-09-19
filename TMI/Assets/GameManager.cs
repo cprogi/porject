@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
         ItemNotice();
         curHp = player.playerHp;
         hpBar.value = curHp / maxHp;
+
+        if (SetMenu.activeSelf == true || BookSet.activeSelf == true || inventory.activeSelf==true)
+            Time.timeScale = 0;
     }
 
     public void OpenSetMenu()

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public GameObject equip;
     public bool itemGet;
     public bool curse;
+    public bool isSmall;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         isEquipped = false;
         itemGet = false;
         curse = false;
+        isSmall = true;
     }
 
 
@@ -72,6 +74,8 @@ public class Player : MonoBehaviour
 
         if (equip.activeSelf == true)
             isEquipped = true;
+        else
+            isEquipped = false;
 
     }
 
@@ -188,10 +192,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "3rd stage")
+        {
             curse = false;
+        }
+        else if(collision.gameObject.tag == "4th stage" && isSmall)
+        {
+            anim.SetBool("change", false);
+            transform.localScale = new Vector3(transform.localScale.x * 5,
+                transform.localScale.y * 5, 0);
+            isSmall = false;
+        }
     }
 
 
@@ -213,6 +226,9 @@ public class Player : MonoBehaviour
     public void ChangeToMarine()
     {
         sprite.sprite = Marine;
+        anim.SetBool("change", true);
+        equip.SetActive(false);
+        Debug.Log("ok");
     }
     
     void FixedUpdate()
