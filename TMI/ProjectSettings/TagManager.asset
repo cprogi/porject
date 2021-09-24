@@ -34,6 +34,9 @@ TagManager:
   - Necro
   - Knocker
   - 4th stage
+  - Kraken
+  - Prickle
+  - Bullet
   layers:
   - Default
   - TransparentFX

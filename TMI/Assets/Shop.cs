@@ -51,7 +51,7 @@ public class Shop : MonoBehaviour
             int cnt = 0;
             while (cnt < requireNum[index])
             {
-                Transform k = inven.slots[materialIdx].transform.GetChild(1);
+                Transform k = inven.slots[materialIdx].transform.GetChild(cnt+1);
                 Destroy(k.gameObject);
                 cnt++;
             }

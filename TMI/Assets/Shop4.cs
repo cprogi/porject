@@ -40,7 +40,7 @@ public class Shop4 : MonoBehaviour
                 int cnt = 0;
                 while (cnt < 2)
                 {
-                    Transform proc = inven.slots[materialIdx].transform.GetChild(1);
+                    Transform proc = inven.slots[materialIdx].transform.GetChild(cnt+1);
                     Destroy(proc.gameObject);
                     Debug.Log("del");
                     cnt++;
@@ -102,17 +102,17 @@ public class Shop4 : MonoBehaviour
         else if (idx == 1)
         {
             int count = 0;
+            int materialIdx = 0;
             for (int i = 0; i < inven.slots.Length; i++)
             {
                 if (inven.slots[i].transform.childCount > 1)
                 {
                     Transform c = inven.slots[i].transform.GetChild(1);
-                    for (int j = 0; j < 2; j++)
+                    if(c.gameObject.tag == "JewelyC")
                     {
-                        if (c.gameObject.tag == "JewelyC")
-                        {
-                            count++;
-                        }
+                        count = inven.slots[i].transform.childCount - 1;
+                        materialIdx = i;
+                        break;
                     }
                 }
             }
@@ -120,22 +120,12 @@ public class Shop4 : MonoBehaviour
             if (count >= 2)
             {
                 int cnt = 0;
-                for (int i = 0; i < inven.slots.Length; i++)
+                while (cnt < 2)
                 {
-                    if (cnt >= 2)
-                        break;
-                    if (inven.slots[i].transform.childCount > 1)
-                    {
-                        Transform k = inven.slots[i].transform.GetChild(1);
-                        if (k.gameObject.tag == "JewelyC")
-                        {
-                            for (int j = 0; j < 2; j++)
-                            {
-                                Destroy(k.gameObject);
-                                cnt++;
-                            }
-                        }
-                    }
+                    Transform proc = inven.slots[materialIdx].transform.GetChild(cnt + 1);
+                    Destroy(proc.gameObject);
+                    Debug.Log("del");
+                    cnt++;
                 }
                 int ct = 0;
                 bool checkOverlap = false;
@@ -193,19 +183,20 @@ public class Shop4 : MonoBehaviour
         else if (idx == 2)
         {
             int JewelyC = 0;
+            int JewelyCIdx = 0;
             int silver = 0;
+            int silverIdx = 0;
 
             for (int i = 0; i < inven.slots.Length; i++)
             {
                 if (inven.slots[i].transform.childCount > 1)
                 {
                     Transform c = inven.slots[i].transform.GetChild(1);
-                    for (int j = 0; j < 1; j++)
+                    if (c.gameObject.tag == "JewelyC")
                     {
-                        if (c.gameObject.tag == "JewelyC")
-                        {
-                            JewelyC++;
-                        }
+                        JewelyC = inven.slots[i].transform.childCount - 1;
+                        JewelyCIdx = i;
+                        break;
                     }
                 }
             }
@@ -215,12 +206,11 @@ public class Shop4 : MonoBehaviour
                 if (inven.slots[i].transform.childCount > 1)
                 {
                     Transform c = inven.slots[i].transform.GetChild(1);
-                    for (int j = 0; j < 1; j++)
+                    if (c.gameObject.tag == "Silverscale")
                     {
-                        if (c.gameObject.tag == "Silverscale")
-                        {
-                            silver++;
-                        }
+                        silver = inven.slots[i].transform.childCount - 1;
+                        silverIdx = i;
+                        break;
                     }
                 }
             }
@@ -228,41 +218,21 @@ public class Shop4 : MonoBehaviour
             if (JewelyC >= 1 && silver >= 1)
             {
                 int cntJ = 0;
-                for (int i = 0; i < inven.slots.Length; i++)
+                while (cntJ < 2)
                 {
-                    if (cntJ >= 1)
-                        break;
-                    if (inven.slots[i].transform.childCount > 1)
-                    {
-                        Transform k = inven.slots[i].transform.GetChild(1);
-                        if (k.gameObject.tag == "JewelyC")
-                        {
-                            for (int j = 0; j < 1; j++)
-                            {
-                                Destroy(k.gameObject);
-                                cntJ++;
-                            }
-                        }
-                    }
+                    Transform proc = inven.slots[JewelyCIdx].transform.GetChild(cntJ + 1);
+                    Destroy(proc.gameObject);
+                    Debug.Log("del");
+                    cntJ++;
                 }
 
                 int cntS = 0;
-                for (int i = 0; i < inven.slots.Length; i++)
+                while (cntS < 2)
                 {
-                    if (cntS >= 1)
-                        break;
-                    if (inven.slots[i].transform.childCount > 1)
-                    {
-                        Transform k = inven.slots[i].transform.GetChild(1);
-                        if (k.gameObject.tag == "Silverscale")
-                        {
-                            for (int j = 0; j < 1; j++)
-                            {
-                                Destroy(k.gameObject);
-                                cntS++;
-                            }
-                        }
-                    }
+                    Transform proc = inven.slots[silverIdx].transform.GetChild(cntS + 1);
+                    Destroy(proc.gameObject);
+                    Debug.Log("del");
+                    cntS++;
                 }
 
                 int ct = 0;
@@ -321,19 +291,20 @@ public class Shop4 : MonoBehaviour
         else if (idx == 3)
         {
             int JewelyB = 0;
+            int JewelyBIdx = 0;
             int seaweed = 0;
+            int seaweedIdx = 0;
 
             for (int i = 0; i < inven.slots.Length; i++)
             {
                 if (inven.slots[i].transform.childCount > 1)
                 {
                     Transform c = inven.slots[i].transform.GetChild(1);
-                    for (int j = 0; j < 1; j++)
+                    if (c.gameObject.tag == "JewelyB")
                     {
-                        if (c.gameObject.tag == "JewelyB")
-                        {
-                            JewelyB++;
-                        }
+                        JewelyB = inven.slots[i].transform.childCount - 1;
+                        JewelyBIdx = i;
+                        break;
                     }
                 }
             }
@@ -343,12 +314,11 @@ public class Shop4 : MonoBehaviour
                 if (inven.slots[i].transform.childCount > 1)
                 {
                     Transform c = inven.slots[i].transform.GetChild(1);
-                    for (int j = 0; j < 2; j++)
+                    if (c.gameObject.tag == "Radweed")
                     {
-                        if (c.gameObject.tag == "Radweed")
-                        {
-                            seaweed++;
-                        }
+                        seaweed = inven.slots[i].transform.childCount - 1;
+                        seaweedIdx = i;
+                        break;
                     }
                 }
             }
@@ -356,41 +326,21 @@ public class Shop4 : MonoBehaviour
             if (JewelyB >= 1 && seaweed >= 2)
             {
                 int cntJ = 0;
-                for (int i = 0; i < inven.slots.Length; i++)
+                while (cntJ < 2)
                 {
-                    if (cntJ >= 1)
-                        break;
-                    if (inven.slots[i].transform.childCount > 1)
-                    {
-                        Transform k = inven.slots[i].transform.GetChild(1);
-                        if (k.gameObject.tag == "JewelyB")
-                        {
-                            for (int j = 0; j < 1; j++)
-                            {
-                                Destroy(k.gameObject);
-                                cntJ++;
-                            }
-                        }
-                    }
+                    Transform proc = inven.slots[JewelyBIdx].transform.GetChild(cntJ + 1);
+                    Destroy(proc.gameObject);
+                    Debug.Log("del");
+                    cntJ++;
                 }
 
                 int cntS = 0;
-                for (int i = 0; i < inven.slots.Length; i++)
+                while (cntS < 2)
                 {
-                    if (cntS >= 1)
-                        break;
-                    if (inven.slots[i].transform.childCount > 1)
-                    {
-                        Transform k = inven.slots[i].transform.GetChild(1);
-                        if (k.gameObject.tag == "Radweed")
-                        {
-                            for (int j = 0; j < 1; j++)
-                            {
-                                Destroy(k.gameObject);
-                                cntS++;
-                            }
-                        }
-                    }
+                    Transform proc = inven.slots[seaweedIdx].transform.GetChild(cntS + 1);
+                    Destroy(proc.gameObject);
+                    Debug.Log("del");
+                    cntS++;
                 }
 
                 int ct = 0;

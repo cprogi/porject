@@ -5,6 +5,7 @@ using UnityEngine;
 public class RIdOil : MonoBehaviour
 {
     public Inventory inven;
+    public AboutItem about;
     bool check;
 
     private void Awake()
@@ -27,7 +28,9 @@ public class RIdOil : MonoBehaviour
         }
 
         if (check == true)
+        {
             Destroy(gameObject);
+        }
         else
             return;
     }

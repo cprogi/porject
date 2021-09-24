@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public bool itemGet;
     public bool curse;
     public bool isSmall;
+    public bool isStrong;
+    public bool readyForAttack;
+    public bool isRidofGas;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -37,6 +40,9 @@ public class Player : MonoBehaviour
         itemGet = false;
         curse = false;
         isSmall = true;
+        isStrong = false;
+        readyForAttack = false;
+        isRidofGas = false;
     }
 
 
@@ -88,6 +94,12 @@ public class Player : MonoBehaviour
             OnDamaged();
             Invoke("OffDamaged", 2);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Kraken")
+            playerHp -= 50;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
