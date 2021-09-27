@@ -15,27 +15,24 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadScene());
     }
 
-    public static void LoadSceneHandle(string _name,int _loadType)
+    public static void LoadSceneHandle(string _name, int _loadType)
     {
         loadScene = _name;
         loadType = _loadType;
         SceneManager.LoadScene("Loading");
     }
+        
 
    IEnumerator LoadScene()
     {
         yield return null;
-        AsyncOperation operation = SceneManager.LoadSceneAsync(loadScene);
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Play");
         operation.allowSceneActivation = false;
-
+        Time.timeScale = 1;
+        Debug.Log(Time.timeScale);
         while(!operation.isDone)
         {
             yield return null;
-
-            if (loadType == 0)
-                Debug.Log("새게임");
-            else if (loadType == 1)
-                Debug.Log("이어하기");
 
             if(progressbar.value<0.9f)
             {

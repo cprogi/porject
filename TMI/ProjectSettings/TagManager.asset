@@ -37,6 +37,8 @@ TagManager:
   - Kraken
   - Prickle
   - Bullet
+  - Shovel
+  - Book
   layers:
   - Default
   - TransparentFX

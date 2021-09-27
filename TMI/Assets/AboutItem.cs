@@ -52,6 +52,7 @@ public class AboutItem : MonoBehaviour
         itemName.Add(1100, "네크로미콘");
         itemName.Add(1200, "청록 노커");
         itemName.Add(1300, "쏠베감펭의 가시");
+        itemName.Add(1400, "도감");
 
         itemData.Add(1, "해초를 캐는 도구");
         itemData.Add(2, "딱딱한 것을 깨뜨리는 튼튼한 망치");
@@ -79,6 +80,7 @@ public class AboutItem : MonoBehaviour
         itemData.Add(1100, "금지된 전설의 마도서. 온갖 신비로운 주술들이 적혀 있지만 평범한 인간은 읽으면 미쳐버린다.");
         itemData.Add(1200, "아름다운 모양의 도어 노커. 무엇을 두드리기 위한 것인지 모른다.");
         itemData.Add(1300, "쏠베감펭의 독가시");
+        itemData.Add(1400, "당신이 만난 바닷속 생명들이 담긴 책");
     }
 
     public string ShowItemData(int id)

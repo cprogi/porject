@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         isEquipped = false;
         itemGet = false;
         curse = false;
-        isSmall = true;
+        isSmall = false;
         isStrong = false;
         readyForAttack = false;
         isRidofGas = false;
@@ -99,7 +99,11 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Kraken")
+        {
             playerHp -= 50;
+            OnDamaged();
+            Invoke("OffDamaged", 2);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -210,7 +214,7 @@ public class Player : MonoBehaviour
         {
             curse = false;
         }
-        else if(collision.gameObject.tag == "4th stage" && isSmall)
+        else if(collision.gameObject.tag == "4th stage" && isSmall==true)
         {
             anim.SetBool("change", false);
             transform.localScale = new Vector3(transform.localScale.x * 5,

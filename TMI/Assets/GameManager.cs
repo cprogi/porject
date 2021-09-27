@@ -13,15 +13,21 @@ public class GameManager : MonoBehaviour
     public GameObject SetMenu;
     public GameObject questSet;
     public GameObject BookSet;
+    public GameObject Book;
+    public GameObject Select;
+    public GameObject ClearPop;
+    public Inventory inven;
     public Text Notice;
     public float maxHp = 100;
     public float curHp;
     public int UseItemId;
+    public bool clear;
     
     void Start()
     {
         curHp = player.playerHp;
         hpBar.value = curHp / maxHp;
+        clear = false;
     }
 
     // Update is called once per frame
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void ReturnMain()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 
@@ -127,5 +134,49 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+    }
+
+    public void LastSelect_Y()
+    {
+        bool isChecked = false;
+        for(int i = 0; i<inven.slots.Length; i++)
+        {
+            if (inven.slots[i].transform.childCount > 1)
+            {
+                GameObject k = inven.slots[i].transform.GetChild(1).gameObject;
+                if (k.tag == "Book")
+                {
+                    Destroy(k);
+                    isChecked = true;
+                    break;
+                }
+            }
+        }
+
+        if(isChecked == true)
+        {
+            Book.SetActive(true);
+            clear = true;
+            Invoke("ShowClear", 2);
+        }
+        else
+        {
+            Notice.text = "도감이 없습니다.";
+            Invoke("CloseNotice", 2);
+        }
+        Select.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void LastSelect_N()
+    {
+        Select.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void ShowClear()
+    {
+        Time.timeScale = 0;
+        ClearPop.SetActive(true);
     }
 }

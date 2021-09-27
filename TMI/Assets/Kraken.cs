@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Kraken : MonoBehaviour
 {
-    int hitCount;
-    private void OnCollisionEnter2D(Collision2D collision)
+    public int hitCount;
+    public int HP;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Bullet")
-            hitCount++;
+        if (collision.tag == "Bullet")
+        {
+            Debug.Log("Hp °¨¼Ò");
+            HP -= 8;
+        }
     }
 
-    private void Start()
+    private void Update()
     {
-        if (hitCount >= 3)
+        if (HP<=0)
         {
             Destroy(gameObject);
             Debug.Log("Destroy");

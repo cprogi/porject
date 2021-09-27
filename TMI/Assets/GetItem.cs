@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GetItem : MonoBehaviour
 {
     public PickUp pick;
     public Inventory inven;
+    public Text Notice;
 
     bool checkEmpty;
     int idx;
@@ -35,6 +36,7 @@ public class GetItem : MonoBehaviour
                 {
                     checkOverlap = true;
                     overlapIdx = i;
+                    Debug.Log("중복");
                     break;
                 }
             }
@@ -53,7 +55,20 @@ public class GetItem : MonoBehaviour
             Debug.Log("ok");
         }
         else
-            return;
+        {
+            Notice.text = "가방이 가득 찼습니다.";
+            SHow();
+            Invoke("Close", 1);
+        }
 
+    }
+
+    void SHow()
+    {
+        Notice.gameObject.SetActive(true);
+    }
+    void Close()
+    {
+        Notice.gameObject.SetActive(false);
     }
 }

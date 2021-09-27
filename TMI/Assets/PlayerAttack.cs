@@ -27,8 +27,7 @@ public class PlayerAttack : MonoBehaviour
                 Instantiate(bullet, pos.position, transform.rotation);
             }
             curtime = cooltime;
-            cooltime -= Time.deltaTime;
         }
-      
+        curtime -= Time.deltaTime;
     }
 }
