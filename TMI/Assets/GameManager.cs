@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject Book;
     public GameObject Select;
     public GameObject ClearPop;
+    public GameObject DeadPop;
     public Inventory inven;
     public Text Notice;
     public float maxHp = 100;
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         if(player.isDead == true)
         {
-            SceneManager.LoadScene(0);
+            DeadPop.SetActive(true);
             player.isDead = false;
         }
     }
@@ -178,5 +179,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         ClearPop.SetActive(true);
+    }
+
+    public void Again()
+    {
+        SceneManager.LoadScene("Play");
     }
 }

@@ -8,7 +8,8 @@ public enum BTNType
     Continue,
     Option,
     Sound,
-    Back
+    Back,
+    Quit
 }
 
 public class MainUI : MonoBehaviour

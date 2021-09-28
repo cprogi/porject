@@ -51,7 +51,10 @@ public class Player : MonoBehaviour
         if (playerHp > 100)
             playerHp = 100;
         if (playerHp <= 0)
+        {
             isDead = true;
+            gameObject.SetActive(false);
+        }
         HealthDown();
      
         if (Input.GetMouseButton(0))
