@@ -20,11 +20,11 @@ public class Door : MonoBehaviour
     {
         for(int i = 0; i < inven.slots.Length; i++)
         {
-            if (inven.slots[i].transform.childCount > 0)
+            if (inven.slots[i].transform.childCount > 1)
             {
-                Transform k = inven.slots[i].transform.GetChild(0);
+                Transform k = inven.slots[i].transform.GetChild(1);
 
-                if(k.gameObject.name == "Handle")
+                if(k.gameObject.tag == "Handle")
                 {
                     check = true;
                     handleIdx = i;
@@ -42,6 +42,10 @@ public class Door : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            Destroy(inven.slots[handleIdx].transform.GetChild(1).gameObject);
+            Notice.text = "문을 열었습니다.";
+            Notice.gameObject.SetActive(true);
+            Invoke("Close", 1);
         }
     }
 

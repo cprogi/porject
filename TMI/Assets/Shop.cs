@@ -31,17 +31,17 @@ public class Shop : MonoBehaviour
     public void Buy(int index)
     {
         int count = 0;
+        int materialIdx = 0;
         for(int i = 0; i < inven.slots.Length; i++)
         {
             if (inven.slots[i].transform.childCount > 1)
             {
                 Transform c = inven.slots[i].transform.GetChild(1);
-                for(int j = 0; j < requireNum[index]; j++)
+                if(c.gameObject.tag == require[index].gameObject.tag)
                 {
-                    if (require[index].gameObject.tag == c.gameObject.tag)
-                    {
-                        count++;
-                    }
+                    count = inven.slots[i].transform.childCount - 1;
+                    materialIdx = i;
+                    break;
                 }
             }
         }
@@ -49,22 +49,11 @@ public class Shop : MonoBehaviour
         if (count >= requireNum[index])
         {
             int cnt = 0;
-            for(int i =0; i < inven.slots.Length; i++)
+            while (cnt < requireNum[index])
             {
-                if (cnt >= requireNum[index])
-                    break;
-                if (inven.slots[i].transform.childCount > 1)
-                {
-                    Transform k = inven.slots[i].transform.GetChild(1);
-                    if(k.gameObject.tag == require[index].tag)
-                    {
-                        for(int j = 0; j < requireNum[index]; j++)
-                        {
-                            Destroy(k.gameObject);
-                            cnt++;
-                        }
-                    }
-                }
+                Transform k = inven.slots[materialIdx].transform.GetChild(cnt+1);
+                Destroy(k.gameObject);
+                cnt++;
             }
 
             int ct = 0;

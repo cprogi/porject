@@ -14,14 +14,21 @@ public class Player : MonoBehaviour
     public bool isEquipped;
     public GameObject equip;
     public bool itemGet;
+    public bool curse;
+    public bool isSmall;
+    public bool isStrong;
+    public bool readyForAttack;
+    public bool isRidofGas;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
     Vector2 dirVec;
+    Vector2 reverseVec;
     SpriteRenderer sprite;
     GameObject scanObject;
     Animator anim;
     public Sprite[] equipList;
+    public Sprite Marine;
 
     void Start()
     {
@@ -31,6 +38,11 @@ public class Player : MonoBehaviour
         isDead = false;
         isEquipped = false;
         itemGet = false;
+        curse = false;
+        isSmall = false;
+        isStrong = false;
+        readyForAttack = false;
+        isRidofGas = false;
     }
 
 
@@ -39,16 +51,28 @@ public class Player : MonoBehaviour
         if (playerHp > 100)
             playerHp = 100;
         if (playerHp <= 0)
+        {
             isDead = true;
+            gameObject.SetActive(false);
+        }
         HealthDown();
      
         if (Input.GetMouseButton(0))
                 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(touchPos!=null)
-            transform.position = Vector2.MoveTowards(transform.position, touchPos,dialogue.isAction ? 0 : Time.deltaTime* moveSpeed);
         dir = touchPos - transform.position;
-        sprite.flipX = dir.x > 0;
-        equip.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
+        if (curse == false)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, touchPos, dialogue.isAction ? 0 : Time.deltaTime * moveSpeed);
+            sprite.flipX = dir.x > 0;
+            equip.GetComponent<SpriteRenderer>().flipX = dir.x > 0;
+        }
+        else
+        {
+            reverseVec = new Vector2(touchPos.x - 2 * dir.x, touchPos.y - 2 * dir.y);
+            transform.position = Vector2.MoveTowards(transform.position, reverseVec, dialogue.isAction ? 0 : Time.deltaTime * moveSpeed);
+            sprite.flipX = dir.x < 0;
+            equip.GetComponent<SpriteRenderer>().flipX = dir.x < 0;
+        }
         dirVec = dir.normalized;
 
         //Scan Object
@@ -59,6 +83,8 @@ public class Player : MonoBehaviour
 
         if (equip.activeSelf == true)
             isEquipped = true;
+        else
+            isEquipped = false;
 
     }
 
@@ -68,6 +94,16 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "enemy")
         {
             playerHp -= 10;
+            OnDamaged();
+            Invoke("OffDamaged", 2);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Kraken")
+        {
+            playerHp -= 50;
             OnDamaged();
             Invoke("OffDamaged", 2);
         }
@@ -168,6 +204,26 @@ public class Player : MonoBehaviour
 
             }
         }
+
+        else if (collision.gameObject.tag == "3rd stage")
+        {
+            curse = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "3rd stage")
+        {
+            curse = false;
+        }
+        else if(collision.gameObject.tag == "4th stage" && isSmall==true)
+        {
+            anim.SetBool("change", false);
+            transform.localScale = new Vector3(transform.localScale.x * 5,
+                transform.localScale.y * 5, 0);
+            isSmall = false;
+        }
     }
 
 
@@ -184,6 +240,14 @@ public class Player : MonoBehaviour
     void HealthDown()
     {
         playerHp -= Time.deltaTime;
+    }
+
+    public void ChangeToMarine()
+    {
+        sprite.sprite = Marine;
+        anim.SetBool("change", true);
+        equip.SetActive(false);
+        Debug.Log("ok");
     }
     
     void FixedUpdate()

@@ -6,6 +6,7 @@ public class EnemyMove : MonoBehaviour
 {
     Rigidbody2D rigid;
     SpriteRenderer sprite;
+    Vector2 dir_x;
     int xpos;
     int ypos;
     
@@ -19,7 +20,8 @@ public class EnemyMove : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.velocity = new Vector2(xpos, ypos);
-
+        dir_x.x = xpos - transform.position.x;
+        sprite.flipX = dir_x.x > 0;
     }
 
     void Think()

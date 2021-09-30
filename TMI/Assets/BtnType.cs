@@ -23,8 +23,8 @@ public class BtnType : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
             case BTNType.New:
                 SceneLoader.LoadSceneHandle("Play", 0);
                 break;
-            case BTNType.Continue:
-                SceneLoader.LoadSceneHandle("Play", 1);
+            case BTNType.Quit:
+                Application.Quit();
                 break;
             case BTNType.Option:
                 CanvasGroupOn(optionGroup);
