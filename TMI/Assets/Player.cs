@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public bool isStrong;
     public bool readyForAttack;
     public bool isRidofGas;
+    bool isMarine;
     Rigidbody2D rigid;
     Vector3 touchPos;
     Vector2 dir;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
         isStrong = false;
         readyForAttack = false;
         isRidofGas = false;
+        isMarine = false;
     }
 
 
@@ -97,6 +99,15 @@ public class Player : MonoBehaviour
             OnDamaged();
             Invoke("OffDamaged", 2);
         }
+        else if (collision.gameObject.tag == "Merfirst")
+        {
+            if (isMarine)
+            {
+                Debug.Log("pass");
+            }
+            else
+                playerHp = 0;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -106,6 +117,15 @@ public class Player : MonoBehaviour
             playerHp -= 50;
             OnDamaged();
             Invoke("OffDamaged", 2);
+        }
+        else if (collision.gameObject.tag == "Finish" && isSmall)
+        {
+            anim.SetBool("change", false);
+            isMarine = false;
+            transform.localScale = new Vector3(transform.localScale.x * 5,
+                transform.localScale.y * 5, 0);
+            isSmall = false;
+            collision.gameObject.SetActive(false);
         }
     }
 
@@ -217,13 +237,6 @@ public class Player : MonoBehaviour
         {
             curse = false;
         }
-        else if(collision.gameObject.tag == "4th stage" && isSmall==true)
-        {
-            anim.SetBool("change", false);
-            transform.localScale = new Vector3(transform.localScale.x * 5,
-                transform.localScale.y * 5, 0);
-            isSmall = false;
-        }
     }
 
 
@@ -246,7 +259,7 @@ public class Player : MonoBehaviour
     {
         sprite.sprite = Marine;
         anim.SetBool("change", true);
-        equip.SetActive(false);
+        isMarine = true;
         Debug.Log("ok");
     }
     

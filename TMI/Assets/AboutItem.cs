@@ -12,16 +12,19 @@ public class AboutItem : MonoBehaviour
     public GameObject Map;
     public GameObject Necro;
     public Inventory inven;
+    public Text Notice;
     public int itemReady;
     public string useItem;
     public string slotName;
     public int countGas;
+    bool sucess;
     private void Awake()
     {
         itemData = new Dictionary<int, string>();
         itemName = new Dictionary<int, string>();
         GenerateData();
         countGas = 3;
+        sucess = false;
     }
 
     void GenerateData()
@@ -101,6 +104,7 @@ public class AboutItem : MonoBehaviour
                 Transform DI = inven.slots[i].transform.GetChild(1);
                 Destroy(DI.gameObject);
                 itemReady = 0;
+                sucess = true;
                 break;
             }
         }
@@ -165,18 +169,26 @@ public class AboutItem : MonoBehaviour
         Necro.SetActive(true);
     }
 
+    void CloseText()
+    {
+        Notice.gameObject.SetActive(false);
+    }
+
     public void UseItem()
     {
         switch (itemReady)
         {
             case 1:
                 player.equip.GetComponent<SpriteRenderer>().sprite = player.equipList[0];
+                sucess = true;
                 break;
             case 2:
                 player.equip.GetComponent<SpriteRenderer>().sprite = player.equipList[1];
+                sucess = true;
                 break;
             case 3:
                 player.equip.GetComponent<SpriteRenderer>().sprite = player.equipList[2];
+                sucess = true;
                 break;
             case 10:
                 player.playerHp += 10;
@@ -218,6 +230,12 @@ public class AboutItem : MonoBehaviour
                 break;
             default:
                 return;
+        }
+        if (sucess)
+        {
+            Notice.text = "아이템을 사용하셨습니다.";
+            Notice.gameObject.SetActive(true);
+            Invoke("CloseText", 1);
         }
     }
 }
