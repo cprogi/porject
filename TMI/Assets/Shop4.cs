@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shop4 : MonoBehaviour
 {
@@ -8,10 +9,20 @@ public class Shop4 : MonoBehaviour
     public int[] requireNum;
     public int[] itemNum;
     public Inventory inven;
+    public Text Notice;
 
     public void Buy(int index)
     {
         Trade(index);
+    }
+
+    public void OpenText()
+    {
+        Notice.gameObject.SetActive(true);
+    }
+    public void CloseText()
+    {
+        Notice.gameObject.SetActive(false);
     }
 
     public void Trade(int idx)
@@ -91,6 +102,15 @@ public class Shop4 : MonoBehaviour
                         Debug.Log("ok");
                     }
                 }
+                Notice.text = "아이템을 구입하였습니다.";
+                OpenText();
+                Invoke("CloseText", 1);
+            }
+            else
+            {
+                Notice.text = "개수가 부족합니다.";
+                OpenText();
+                Invoke("CloseText", 1);
             }
         }
 
@@ -176,7 +196,15 @@ public class Shop4 : MonoBehaviour
                         Debug.Log("ok");
                     }
                 }
-
+                Notice.text = "아이템을 구입하였습니다.";
+                OpenText();
+                Invoke("CloseText", 1);
+            }
+            else
+            {
+                Notice.text = "개수가 부족합니다.";
+                OpenText();
+                Invoke("CloseText", 1);
             }
         }
         //
@@ -284,6 +312,15 @@ public class Shop4 : MonoBehaviour
                         Debug.Log("ok");
                     }
                 }
+                Notice.text = "아이템을 구입하였습니다.";
+                OpenText();
+                Invoke("CloseText", 1);
+            }
+            else
+            {
+                Notice.text = "개수가 부족합니다.";
+                OpenText();
+                Invoke("CloseText", 1);
             }
         }
 
@@ -387,6 +424,15 @@ public class Shop4 : MonoBehaviour
                         Debug.Log("ok");
                     }
                 }
+                Notice.text = "아이템을 구입하였습니다.";
+                OpenText();
+                Invoke("CloseText", 1);
+            }
+            else
+            {
+                Notice.text = "개수가 부족합니다.";
+                OpenText();
+                Invoke("CloseText", 1);
             }
         }
     }
