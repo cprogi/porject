@@ -271,6 +271,7 @@ public class Player : MonoBehaviour
         if (rayHit.collider != null)
         {
             scanObject = rayHit.collider.gameObject;
+            Debug.Log(scanObject);
         }
         else
         {
