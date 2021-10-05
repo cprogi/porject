@@ -32,7 +32,7 @@ public class GetItem : MonoBehaviour
             }
             else
             {
-                if (inven.slots[i].transform.GetChild(1).tag == gameObject.tag)
+                if (inven.slots[i].transform.GetChild(1).tag == pick.slotItem.tag)
                 {
                     checkOverlap = true;
                     overlapIdx = i;
